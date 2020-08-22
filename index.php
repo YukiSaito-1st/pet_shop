@@ -15,36 +15,36 @@ try {
 }
 
 if ($_GET === "") {
-        // SQL文の組み立て
-        $sql = 'SELECT * FROM animals';
+    // SQL文の組み立て
+    $sql = 'SELECT * FROM animals';
 
-        // プリペアドステートメントの準備
-        // $dbh->query($sql) でも良い
-        $stmt = $dbh->prepare($sql);
+    // プリペアドステートメントの準備
+    // $dbh->query($sql) でも良い
+    $stmt = $dbh->prepare($sql);
 
-        // プリペアドステートメントの実行
-        $stmt->execute();
+    // プリペアドステートメントの実行
+    $stmt->execute();
 
-        // 結果の受け取り
-        $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $keyword = $_GET["keyword"];
-        $keyword = '%' . $keyword . '%'; // %ではさむ
+    // 結果の受け取り
+    $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $keyword = $_GET["keyword"];
+    $keyword = '%' . $keyword . '%'; // %ではさむ
 
-        // SQL文の組み立て
-        $sql = "SELECT * FROM animals WHERE description LIKE :keyword";
+    // SQL文の組み立て
+    $sql = "SELECT * FROM animals WHERE description LIKE :keyword";
 
-        // プリペアドステートメントの準備
-        // $dbh->query($sql) でも良い
-        $stmt = $dbh->prepare($sql);
+    // プリペアドステートメントの準備
+    // $dbh->query($sql) でも良い
+    $stmt = $dbh->prepare($sql);
 
-        // プリペアドステートメントの実行
-        $stmt->bindValue(":keyword", $keyword, PDO::PARAM_STR);
-        $stmt->execute();
+    // プリペアドステートメントの実行
+    $stmt->bindValue(":keyword", $keyword, PDO::PARAM_STR);
+    $stmt->execute();
 
-        // 結果の受け取り
-        $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    // 結果の受け取り
+    $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
